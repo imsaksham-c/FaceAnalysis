@@ -27,7 +27,7 @@ class FaceAnalyzer:
         # Constants for blink detection
         self.EYE_AR_THRESH = 0.25
         self.EYE_AR_CONSEC_FRAMES = 3
-        self.BLINK_COOLDOWN = 10  # frames to wait before detecting next blink
+        self.BLINK_COOLDOWN = 1  # frames to wait before detecting next blink
         
         # Constants for frown detection
         self.MOUTH_AR_THRESH = 0.2  # Threshold for mouth aspect ratio
@@ -36,7 +36,7 @@ class FaceAnalyzer:
         self.frame_times = deque(maxlen=30)
         self.blink_counter = 0
         self.frame_counter = 0
-        self.frown_counter = 0
+        self.frown_counter = -1
         
         # State tracking
         self.blink_cooldown_counter = 0
@@ -241,7 +241,7 @@ def main():
             frame_count += 1  # Increment frame counter
             
             # Process every 5th frame instead of every 3rd
-            if frame_count % 5 == 0:
+            if frame_count % 3 == 0:
                 # Process frame
                 frame, metrics = analyzer.process_frame(frame)
                 
